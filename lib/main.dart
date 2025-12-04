@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'controllers/fav_controller.dart';
 import 'routes/route_names.dart';
 
 void main() {
+  Get.put(FavController());
   runApp(const MyApp());
 }
 

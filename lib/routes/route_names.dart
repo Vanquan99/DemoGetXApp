@@ -1,7 +1,8 @@
-import 'package:flutter_getx/views/content_page.dart';
-import 'package:flutter_getx/views/my_detail_page.dart';
-import 'package:flutter_getx/views/my_home_page.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
+
+import '../views/content_page.dart';
+import '../views/my_detail_page.dart';
+import '../views/my_home_page.dart';
 
 class RouteNames {
   static const String initial = '/';
@@ -10,12 +11,12 @@ class RouteNames {
   static const String contentPage = '/content-page';
 
   static String getInitial() => initial;
-  static String getDetailPage() => detailPage;
+  static String getDetailPage(int id) => '$detailPage?id=$id';
   static String getContentPage() => contentPage;
 
-  static List<GetPage> routes = [
-    GetPage(name: initial, page: () => MyHomePage()),
+  static List<GetPage<dynamic>> routes = [
+    GetPage(name: initial, page: () => const MyHomePage()),
     GetPage(name: detailPage, page: () => DetailPage()),
-    GetPage(name: contentPage, page: () => ContentPage()),
+    GetPage(name: contentPage, page: () => const ContentPage()),
   ];
 }

@@ -1,27 +1,27 @@
-import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/data_controller.dart';
+import '../controllers/fav_controller.dart';
 import '../models/detail_data_model.dart';
-import 'content_page.dart';
-import 'my_home_page.dart';
 
 class DetailPage extends GetView<DataController> {
-  const DetailPage({super.key});
+  DetailPage({super.key});
+
+  final FavController favController = Get.find<FavController>();
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    int _currentIndex = 0;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     // final dataModel = Get.arguments as DetailDataModel;
     // final controller = Get.find<DataController>();
 
+    final String? id = Get.parameters['id'];
+    final DetailDataModel dataModel = controller.dataList[int.parse(id ?? '0')];
+
     return Scaffold(
-      body: Container(
+      body: ColoredBox(
         color: const Color(0xFFc5e5f3),
         child: Stack(
           children: [
@@ -29,7 +29,7 @@ class DetailPage extends GetView<DataController> {
                 top: 50,
                 left: 10,
                 child: IconButton(
-                  onPressed: () => Get.back(),
+                  onPressed: () => Get.back<void>(),
                   icon: const Icon(Icons.arrow_back_ios),
                 )),
             Positioned(
@@ -49,29 +49,29 @@ class DetailPage extends GetView<DataController> {
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage("img/background.jpg"),
+                        backgroundImage: AssetImage(dataModel.img),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
-                      const Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "name",
-                            style: TextStyle(
+                            dataModel.name,
+                            style: const TextStyle(
                                 color: Color(0xFF3b3f42),
                                 fontSize: 18,
                                 decoration: TextDecoration.none),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          Text(
-                            "Top Level",
+                          const Text(
+                            'Top Level',
                             style: TextStyle(
                                 color: Color(0xFFfdebb2),
                                 fontSize: 12,
@@ -133,22 +133,23 @@ class DetailPage extends GetView<DataController> {
                   margin: const EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 20),
                   child: Column(
                     children: [
-                      Container(
-                          child: Row(
+                      Row(
                         children: [
-                          const Text(
-                            "Title",
-                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                          Text(
+                            dataModel.title,
+                            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
                           ),
                           Expanded(child: Container())
                         ],
-                      )),
+                      ),
                       const SizedBox(height: 20),
-                      Container(
+                      SizedBox(
                         width: width,
-                        child: const Text(
-                          "Text",
-                          style: TextStyle(fontSize: 20, color: Color(0xFFb8b8b8)),
+                        child: Text(
+                          dataModel.text,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 20, color: Color(0xFFb8b8b8)),
                         ),
                       ),
                       const SizedBox(
@@ -164,7 +165,6 @@ class DetailPage extends GetView<DataController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(Icons.watch_later, color: Color(0xFF69c5df)),
                               SizedBox(
@@ -175,14 +175,14 @@ class DetailPage extends GetView<DataController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "name",
+                                    'name',
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: Color(0xFF303030),
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    "Deadline",
+                                    'Deadline',
                                     style: TextStyle(fontSize: 18, color: Color(0xFFacacac)),
                                   )
                                 ],
@@ -190,7 +190,6 @@ class DetailPage extends GetView<DataController> {
                             ],
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(Icons.monetization_on, color: Color(0xFFfb8483)),
                               SizedBox(
@@ -201,14 +200,14 @@ class DetailPage extends GetView<DataController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "499",
+                                    '499',
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: Color(0xFF303030),
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    "Prize",
+                                    'Prize',
                                     style: TextStyle(fontSize: 18, color: Color(0xFFacacac)),
                                   )
                                 ],
@@ -216,7 +215,6 @@ class DetailPage extends GetView<DataController> {
                             ],
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(Icons.star, color: Color(0xFFfbc33e)),
                               SizedBox(
@@ -227,14 +225,14 @@ class DetailPage extends GetView<DataController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Top Level",
+                                    'Top Level',
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: Color(0xFF303030),
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    "Entry",
+                                    'Entry',
                                     style: TextStyle(fontSize: 18, color: Color(0xFFacacac)),
                                   )
                                 ],
@@ -252,24 +250,22 @@ class DetailPage extends GetView<DataController> {
                 top: 540,
                 left: 25,
                 height: 50,
-                child: Container(
-                  child: RichText(
-                      text: TextSpan(
-                          text: "Total Participants ",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                          children: [
-                        TextSpan(
-                            text: controller.dataList.length.toString(),
-                            style: const TextStyle(color: Color(0xFFfbc33e)))
-                      ])),
-                )),
+                child: RichText(
+                    text: TextSpan(
+                        text: 'Total Participants ',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                        children: [
+                      TextSpan(
+                          text: controller.dataList.length.toString(),
+                          style: const TextStyle(color: Color(0xFFfbc33e)))
+                    ]))),
             //images
             Stack(children: [
-              for (int i = 0; i < controller.dataList.length; i++)
+              for (int i = 0; i < controller.dataTempList.length; i++)
                 Positioned(
                   top: 590,
                   left: (20 + i * 35).toDouble(),
@@ -279,30 +275,35 @@ class DetailPage extends GetView<DataController> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         image: DecorationImage(
-                            image: AssetImage(controller.dataList[i].img), fit: BoxFit.cover)),
+                            image: AssetImage(controller.dataTempList[i].img), fit: BoxFit.cover)),
                   ),
                 )
             ]),
-            //favourite
+            //favorite
             Positioned(
                 top: 670,
                 left: 25,
                 child: Row(
                   children: [
-                    Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xFFfbc33e)),
-                        child: const Icon(Icons.favorite_border, color: Colors.white)),
+                    GestureDetector(
+                      onTap: () {
+                        favController.fav = !favController.fav;
+                      },
+                      child: Obx(() => Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: favController.fav ? const Color(0xFFfbc33e) : Colors.grey),
+                          child: const Icon(Icons.favorite_border, color: Colors.white))),
+                    ),
                     const SizedBox(
                       width: 10,
                     ),
                     const Text(
-                      "Add to favorite",
+                      'Add to favorite',
                       style: TextStyle(color: Color(0xFFfbc33e), fontSize: 18),
-                    )
+                    ),
                   ],
                 ))
             //))

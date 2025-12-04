@@ -1,12 +1,8 @@
-class DetailDataModel {
-  final String name;
-  final String title;
-  final String text;
-  final String img;
-  final String time;
-  final String prize;
+import 'package:flutter/foundation.dart';
 
-  DetailDataModel({
+@immutable
+class DetailDataModel {
+  const DetailDataModel({
     required this.name,
     required this.title,
     required this.text,
@@ -26,6 +22,12 @@ class DetailDataModel {
       prize: json['prize'] as String,
     );
   }
+  final String name;
+  final String title;
+  final String text;
+  final String img;
+  final String time;
+  final String prize;
 
   // Method to convert an instance to JSON
   Map<String, dynamic> toJson() {
@@ -70,7 +72,9 @@ class DetailDataModel {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+    if (identical(this, other)) {
+      return true;
+    }
     return other is DetailDataModel &&
         other.name == name &&
         other.title == title &&

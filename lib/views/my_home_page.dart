@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_getx/routes/route_names.dart';
-import 'package:flutter_getx/views/content_page.dart';
 import 'package:get/get.dart';
+
+import '../routes/route_names.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -27,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                   image:
-                      DecorationImage(image: AssetImage("img/background.jpg"), fit: BoxFit.cover)),
+                      DecorationImage(image: AssetImage('img/background.jpg'), fit: BoxFit.cover)),
             ),
           ),
           Positioned(
@@ -37,12 +36,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Pick Your Favourite",
+                    'Pick Your Favorite',
                     style:
                         TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w600),
                   ),
                   const Text(
-                    "Contests",
+                    'Contests',
                     style:
                         TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w600),
                   ),
@@ -52,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                       width: MediaQuery.of(context).size.width - 25,
                       child: const Text(
-                        "We make great design work "
-                        "happen with our great community designer",
+                        'We make great design work '
+                        'happen with our great community designer',
                         style: TextStyle(color: Colors.white60),
                       )),
                   const SizedBox(
@@ -80,10 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         // );
                         // Get.to(() => ContentPage());
                         // Get.toNamed('/content');
-                        Get.toNamed(RouteNames.getContentPage());
+                        Get.toNamed<void>(RouteNames.getContentPage());
                       },
                       child: const Text(
-                        "Get started",
+                        'Get started',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
